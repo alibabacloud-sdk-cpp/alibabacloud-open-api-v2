@@ -8,7 +8,7 @@ else()
 
   FetchContent_Declare(
           _alibabacloud_credential
-          GIT_REPOSITORY https://github.com/peze/alibabacloud-credential.git
+          GIT_REPOSITORY https://github.com/aliyun/credentials-cpp.git
           GIT_TAG master
           CMAKE_ARGS -DENABLE_UNIT_TESTS:BOOL="0"
   )
