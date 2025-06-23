@@ -334,9 +334,15 @@ string Utils::arrayToStringWithSpecifiedStyle(const Darabonba::Json &array,
  * Stringify the value of map
  * @return the new stringified map
  */
-map<string, string> Utils::stringifyMapValue(map<string, Darabonba::Json> &m) {
+map<string, string> Utils::stringifyMapValue(json &m) {
   map<string, string> result;
-
+  if (m.is_null()) {
+      return result;
+  }
+  if (!m.is_object()) {
+      return result;
+  }
+  map<string, Darabonba::Json> mr = m.get<map<string, Darabonba::Json>>();
   for (const auto& kv : m) {
       const string& key = kv.first;
       const nlohmann::json& value = kv.second;

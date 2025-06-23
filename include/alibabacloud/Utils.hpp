@@ -124,7 +124,7 @@ namespace Utils
        * Stringify the value of map
        * @return the new stringified map
        */
-      static map<string, string> stringifyMapValue(map<string, Darabonba::Json> &m);
+      static map<string, string> stringifyMapValue(json &m);
 
       /**
        * Transform input as array.
