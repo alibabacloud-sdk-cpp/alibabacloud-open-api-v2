@@ -142,7 +142,9 @@ namespace Utils
       /**
        * Transform input as map.
        */
-      static map<string, Darabonba::Json> parseToMap(Darabonba::Json &input);
+      static Darabonba::Json parseToMap(Darabonba::Json &input) {
+        return input;
+      };
 
       static std::string hexEncode(const Darabonba::Bytes &raw) {
         return Darabonba::Encode::Encoder::hexEncode(raw);
@@ -221,6 +223,14 @@ namespace Utils
                               map<string, string> &out);
 
     static int64_t getTimeLeft(const map<string, string>& headers, const string& key);
+
+    static void exceptStream(json &data);
+
+    template <typename T>
+    static bool isStreamPtr(uintptr_t ptr_value) {
+      auto ptr = reinterpret_cast<std::shared_ptr<T>*>(ptr_value);
+      return ptr && dynamic_cast<T*>(ptr->get());
+    }
   };
 
 } // namespace Alibabacloud

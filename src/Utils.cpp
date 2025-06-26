@@ -7,6 +7,8 @@
 #include <alibabacloud/Utils.hpp>
 #include <map>
 #include <set>
+#include <typeinfo>
+
 using namespace std;
 using json = nlohmann::json;
 using Form = Darabonba::Http::Form;
@@ -32,6 +34,7 @@ namespace Utils
  */
 void Utils::convert(const Darabonba::Model &body, Darabonba::Model &content) {
   auto map = body.toMap();
+  exceptStream(map);
   content.fromMap(map);
   content.validate();
 }
@@ -343,12 +346,16 @@ map<string, string> Utils::stringifyMapValue(json &m) {
       return result;
   }
   map<string, Darabonba::Json> mr = m.get<map<string, Darabonba::Json>>();
-  for (const auto& kv : m) {
+  for (const auto& kv : mr) {
       const string& key = kv.first;
       const nlohmann::json& value = kv.second;
 
-      if (!value.is_null()) {
-          result[key] = value.dump();
+      if (!value.is_null() ){
+          if(value.is_string()) {
+            result[key] = value;
+          } else {
+            result[key] = value.dump();
+          }
       }
   }
 
@@ -522,6 +529,33 @@ string Utils::getEndpointRules(const string &product,
         ".aliyuncs.com");
   }
   return lowercase(result);
+}
+
+void Utils::exceptStream(json &data) {
+  for (auto it = data.begin(); it != data.end(); ) {
+    auto& key = it.key();
+    auto& value = it.value();
+
+    // Check for shared_ptr<Darabonba::IStream> or shared_ptr<Darabonba::OStream>
+    try {
+      if (value.is_object() || value.is_array()) {
+        exceptStream(value);  // Recursively process objects and arrays
+        ++it;
+      } else if (value.is_number_integer()) {
+        uintptr_t ptr_value = value.get<uintptr_t>();
+
+        if (isStreamPtr<Darabonba::IStream>(ptr_value) || isStreamPtr<Darabonba::OStream>(ptr_value)) {
+          it = data.erase(it);
+        } else {
+          ++it;
+        }
+      } else {
+        ++it;
+      }
+    } catch (const std::exception& e) {
+      ++it; // In any exception case, continue to next element
+    }
+  }
 }
 } // namespace Alibabacloud
 } // namespace OpenApi
