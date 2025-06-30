@@ -27,15 +27,15 @@ namespace OpenApi
 {
 
 /**
- * Init client with Config
- * @param config config contains the necessary information to create a client
- */
+* Init client with Config
+* @param config config contains the necessary information to create a client
+*/
 AlibabaCloud::OpenApi::Client::Client(AlibabaCloud::OpenApi::Utils::Models::Config &config){
   if (config.empty()) {
     throw ClientException(json({
-      {"code" , "ParameterMissing"},
-      {"message" , "'config' can not be unset"}
-    }));
+                                   {"code" , "ParameterMissing"},
+                                   {"message" , "'config' can not be unset"}
+                               }));
   }
 
   if ((!!config.hasAccessKeyId() && config.accessKeyId() != "") && (!!config.hasAccessKeySecret() && config.accessKeySecret() != "")) {
@@ -46,17 +46,17 @@ AlibabaCloud::OpenApi::Client::Client(AlibabaCloud::OpenApi::Utils::Models::Conf
     }
 
     AlibabaCloud::Credential::Models::Config credentialConfig = AlibabaCloud::Credential::Models::Config(json({
-      {"accessKeyId" , config.accessKeyId()},
-      {"type" , config.type()},
-      {"accessKeySecret" , config.accessKeySecret()}
-    }));
+                                                                                                                  {"accessKeyId" , config.accessKeyId()},
+                                                                                                                  {"type" , config.type()},
+                                                                                                                  {"accessKeySecret" , config.accessKeySecret()}
+                                                                                                              }));
     credentialConfig.setSecurityToken(config.securityToken());
     this->_credential = make_shared<CredentialClient>(credentialConfig);
   } else if (!!config.hasBearerToken() && config.bearerToken() != "") {
     AlibabaCloud::Credential::Models::Config cc = AlibabaCloud::Credential::Models::Config(json({
-      {"type" , "bearer"},
-      {"bearerToken" , config.bearerToken()}
-    }));
+                                                                                                    {"type" , "bearer"},
+                                                                                                    {"bearerToken" , config.bearerToken()}
+                                                                                                }));
     this->_credential = make_shared<CredentialClient>(cc);
   } else if (!!config.hasCredential()) {
     this->_credential = config.credential();
@@ -92,29 +92,29 @@ AlibabaCloud::OpenApi::Client::Client(AlibabaCloud::OpenApi::Utils::Models::Conf
 
 Darabonba::Json Client::doRPCRequest(const string &action, const string &version, const string &protocol, const string &method, const string &authType, const string &bodyType, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   Darabonba::RuntimeOptions runtime_(json({
-    {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
-    {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
-    {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
-    {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
-    {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
-    {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
-    {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
-    {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
-    {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
-    {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
-    {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
-    {"retryOptions", _retryOptions},
-    {"ignoreSSL", runtime.ignoreSSL()},
-    {"tlsMinVersion", _tlsMinVersion}
-    }));
+                                              {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
+                                              {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
+                                              {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
+                                              {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
+                                              {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
+                                              {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
+                                              {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
+                                              {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
+                                              {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
+                                              {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
+                                              {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
+                                              {"retryOptions", _retryOptions},
+                                              {"ignoreSSL", runtime.ignoreSSL()},
+                                              {"tlsMinVersion", _tlsMinVersion}
+                                          }));
 
   shared_ptr<Darabonba::Http::Request> _lastRequest = nullptr;
   shared_ptr<Darabonba::Http::MCurlResponse> _lastResponse = nullptr;
   Darabonba::Exception _lastException;
   int _retriesAttempted = 0;
   Darabonba::Policy::RetryPolicyContext _context = json({
-    {"retriesAttempted" , _retriesAttempted}
-  });
+                                                            {"retriesAttempted" , _retriesAttempted}
+                                                        });
   while (Darabonba::allowRetry(runtime_.retryOptions(), _context)) {
     if (_retriesAttempted > 0) {
       int _backoffTime = Darabonba::getBackoffTime(runtime_.retryOptions(), _context);
@@ -157,40 +157,40 @@ Darabonba::Json Client::doRPCRequest(const string &action, const string &version
       }
 
       request_.setQuery(Darabonba::Core::merge(json({
-          {"Action" , action},
-          {"Format" , "json"},
-          {"Version" , version},
-          {"Timestamp" , Utils::Utils::getTimestamp()},
-          {"SignatureNonce" , Utils::Utils::getNonce()}
-        }),
-        globalQueries,
-        extendsQueries,
-        request.query()
+                                                        {"Action" , action},
+                                                        {"Format" , "json"},
+                                                        {"Version" , version},
+                                                        {"Timestamp" , Utils::Utils::getTimestamp()},
+                                                        {"SignatureNonce" , Utils::Utils::getNonce()}
+                                                    }),
+                                               globalQueries,
+                                               extendsQueries,
+                                               request.query()
       ));
       map<string, string> headers = getRpcHeaders();
       if (Darabonba::isNull(headers)) {
         // endpoint is setted in product client
         request_.setHeaders(Darabonba::Core::merge(json({
-            {"host" , _endpoint},
-            {"x-acs-version" , version},
-            {"x-acs-action" , action},
-            {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
-          }),
-          globalHeaders,
-          extendsHeaders,
-          request.headers()
+                                                            {"host" , _endpoint},
+                                                            {"x-acs-version" , version},
+                                                            {"x-acs-action" , action},
+                                                            {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
+                                                        }),
+                                                   globalHeaders,
+                                                   extendsHeaders,
+                                                   request.headers()
         ));
       } else {
         request_.setHeaders(Darabonba::Core::merge(json({
-            {"host" , _endpoint},
-            {"x-acs-version" , version},
-            {"x-acs-action" , action},
-            {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
-          }),
-          globalHeaders,
-          extendsHeaders,
-          request.headers(),
-          headers
+                                                            {"host" , _endpoint},
+                                                            {"x-acs-version" , version},
+                                                            {"x-acs-action" , action},
+                                                            {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
+                                                        }),
+                                                   globalHeaders,
+                                                   extendsHeaders,
+                                                   request.headers(),
+                                                   headers
         ));
       }
 
@@ -204,9 +204,9 @@ Darabonba::Json Client::doRPCRequest(const string &action, const string &version
       if (authType != "Anonymous") {
         if (Darabonba::isNull(_credential)) {
           throw ClientException(json({
-            {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
-            {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
-          }));
+                                         {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
+                                         {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
+                                     }));
         }
 
         CredentialModel credentialModel = _credential->getCredential();
@@ -236,7 +236,7 @@ Darabonba::Json Client::doRPCRequest(const string &action, const string &version
           }
 
           map<string, string> signedParam = Darabonba::Core::merge(request_.query(),
-            Utils::Utils::query(t)
+                                                                   Utils::Utils::query(t)
           );
           request_.addQuery("Signature", Utils::Utils::getRPCSignature(signedParam, request_.method(), accessKeySecret));
         }
@@ -251,91 +251,91 @@ Darabonba::Json Client::doRPCRequest(const string &action, const string &version
       if ((response_->statusCode() >= 400) && (response_->statusCode() < 600)) {
         Darabonba::Json _res = Darabonba::Stream::readAsJSON(response_->body());
         json err = json(_res);
-        Darabonba::Json requestId = Darabonba::defaultVal(err.value("RequestId", ""), err.value("requestId", ""));
-        Darabonba::Json code = Darabonba::defaultVal(err.value("Code", ""), err.value("code", ""));
+        Darabonba::Json requestId = Darabonba::defaultVal(err["RequestId"], err["requestId"]);
+        Darabonba::Json code = Darabonba::defaultVal(err["Code"], err["code"]);
         if ((DARA_STRING_TEMPLATE("" , code) == "Throttling") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.User") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.Api")) {
           throw ThrottlingException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                             {"statusCode" , response_->statusCode()},
+                                             {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                             {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                             {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                             {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
+                                             {"data" , err},
+                                             {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                         }));
         } else if ((response_->statusCode() >= 400) && (response_->statusCode() < 500)) {
           throw ClientException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"accessDeniedDetail" , getAccessDeniedDetail(err)},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"accessDeniedDetail" , getAccessDeniedDetail(err)},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         } else {
           throw ServerException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         }
 
       }
 
       if (bodyType == "binary") {
         json resp = json({
-          {"body" , response_->body()},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                             {"body" , response_->body()},
+                             {"headers" , response_->headers()},
+                             {"statusCode" , response_->statusCode()}
+                         });
         return resp;
       } else if (bodyType == "byte") {
         Darabonba::Bytes byt = Darabonba::Stream::readAsBytes(response_->body());
         return json({
-          {"body" , byt},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , byt},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "string") {
         string _str = Darabonba::Stream::readAsString(response_->body());
         return json({
-          {"body" , _str},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , _str},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "json") {
         Darabonba::Json obj = Darabonba::Stream::readAsJSON(response_->body());
         json res = json(obj);
         return json({
-          {"body" , res},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , res},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "array") {
         Darabonba::Json arr = Darabonba::Stream::readAsJSON(response_->body());
         return json({
-          {"body" , arr},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , arr},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else {
         return json({
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       }
 
     } catch (const Darabonba::Exception& ex) {
       _context = Darabonba::Policy::RetryPolicyContext(json({
-        {"retriesAttempted" , _retriesAttempted},
-        {"lastRequest" , _lastRequest},
-        {"lastResponse" , _lastResponse},
-        {"exception" , ex},
-      }));
+                                                                {"retriesAttempted" , _retriesAttempted},
+                                                                {"lastRequest" , _lastRequest},
+                                                                {"lastResponse" , _lastResponse},
+                                                                {"exception" , ex},
+                                                            }));
       continue;
     }
   }
@@ -345,29 +345,29 @@ Darabonba::Json Client::doRPCRequest(const string &action, const string &version
 
 Darabonba::Json Client::doROARequest(const string &action, const string &version, const string &protocol, const string &method, const string &authType, const string &pathname, const string &bodyType, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   Darabonba::RuntimeOptions runtime_(json({
-    {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
-    {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
-    {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
-    {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
-    {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
-    {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
-    {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
-    {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
-    {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
-    {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
-    {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
-    {"retryOptions", _retryOptions},
-    {"ignoreSSL", runtime.ignoreSSL()},
-    {"tlsMinVersion", _tlsMinVersion}
-    }));
+                                              {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
+                                              {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
+                                              {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
+                                              {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
+                                              {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
+                                              {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
+                                              {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
+                                              {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
+                                              {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
+                                              {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
+                                              {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
+                                              {"retryOptions", _retryOptions},
+                                              {"ignoreSSL", runtime.ignoreSSL()},
+                                              {"tlsMinVersion", _tlsMinVersion}
+                                          }));
 
   shared_ptr<Darabonba::Http::Request> _lastRequest = nullptr;
   shared_ptr<Darabonba::Http::MCurlResponse> _lastResponse = nullptr;
   Darabonba::Exception _lastException;
   int _retriesAttempted = 0;
   Darabonba::Policy::RetryPolicyContext _context = json({
-    {"retriesAttempted" , _retriesAttempted}
-  });
+                                                            {"retriesAttempted" , _retriesAttempted}
+                                                        });
   while (Darabonba::allowRetry(runtime_.retryOptions(), _context)) {
     if (_retriesAttempted > 0) {
       int _backoffTime = Darabonba::getBackoffTime(runtime_.retryOptions(), _context);
@@ -410,40 +410,40 @@ Darabonba::Json Client::doROARequest(const string &action, const string &version
       }
 
       request_.setHeaders(Darabonba::Core::merge(json({
-          {"date" , Utils::Utils::getDateUTCString()},
-          {"host" , _endpoint},
-          {"accept" , "application/json"},
-          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
-          {"x-acs-signature-method" , "HMAC-SHA1"},
-          {"x-acs-signature-version" , "1.0"},
-          {"x-acs-version" , version},
-          {"x-acs-action" , action},
-          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
-        }),
-        globalHeaders,
-        extendsHeaders,
-        request.headers()
+                                                          {"date" , Utils::Utils::getDateUTCString()},
+                                                          {"host" , _endpoint},
+                                                          {"accept" , "application/json"},
+                                                          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
+                                                          {"x-acs-signature-method" , "HMAC-SHA1"},
+                                                          {"x-acs-signature-version" , "1.0"},
+                                                          {"x-acs-version" , version},
+                                                          {"x-acs-action" , action},
+                                                          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
+                                                      }),
+                                                 globalHeaders,
+                                                 extendsHeaders,
+                                                 request.headers()
       ));
       if (!!request.hasBody()) {
-        request_.setBody(Darabonba::Stream::toReadable(request.body().dump()));
+        request_.setBody(Darabonba::Stream::toReadable(json(request.body()).dump()));
         request_.addHeader("content-type", "application/json; charset=utf-8");
       }
 
       request_.setQuery(Darabonba::Core::merge(globalQueries,
-        extendsQueries
+                                               extendsQueries
       ));
       if (!!request.hasQuery()) {
         request_.setQuery(Darabonba::Core::merge(request_.query(),
-          request.query()
+                                                 request.query()
         ));
       }
 
       if (authType != "Anonymous") {
         if (Darabonba::isNull(_credential)) {
           throw ClientException(json({
-            {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
-            {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
-          }));
+                                         {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
+                                         {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
+                                     }));
         }
 
         CredentialModel credentialModel = _credential->getCredential();
@@ -478,99 +478,99 @@ Darabonba::Json Client::doROARequest(const string &action, const string &version
 
       if (response_->statusCode() == 204) {
         return json({
-          {"headers" , response_->headers()}
-        });
+                        {"headers" , response_->headers()}
+                    });
       }
 
       if ((response_->statusCode() >= 400) && (response_->statusCode() < 600)) {
         Darabonba::Json _res = Darabonba::Stream::readAsJSON(response_->body());
         json err = json(_res);
-        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("RequestId", ""), err.value("requestId", "")));
-        requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(requestId, err.value("requestid", "")));
-        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("Code", ""), err.value("code", "")));
+        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["RequestId"], err["requestId"]));
+        requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(requestId, err["requestid"]));
+        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["Code"], err["code"]));
         if ((DARA_STRING_TEMPLATE("" , code) == "Throttling") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.User") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.Api")) {
           throw ThrottlingException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                             {"statusCode" , response_->statusCode()},
+                                             {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                             {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                             {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                             {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
+                                             {"data" , err},
+                                             {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                         }));
         } else if ((response_->statusCode() >= 400) && (response_->statusCode() < 500)) {
           throw ClientException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"accessDeniedDetail" , getAccessDeniedDetail(err)},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"accessDeniedDetail" , getAccessDeniedDetail(err)},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         } else {
           throw ServerException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         }
 
       }
 
       if (bodyType == "binary") {
         json resp = json({
-          {"body" , response_->body()},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                             {"body" , response_->body()},
+                             {"headers" , response_->headers()},
+                             {"statusCode" , response_->statusCode()}
+                         });
         return resp;
       } else if (bodyType == "byte") {
         Darabonba::Bytes byt = Darabonba::Stream::readAsBytes(response_->body());
         return json({
-          {"body" , byt},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , byt},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "string") {
         string _str = Darabonba::Stream::readAsString(response_->body());
         return json({
-          {"body" , _str},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , _str},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "json") {
         Darabonba::Json obj = Darabonba::Stream::readAsJSON(response_->body());
         json res = json(obj);
         return json({
-          {"body" , res},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , res},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "array") {
         Darabonba::Json arr = Darabonba::Stream::readAsJSON(response_->body());
         return json({
-          {"body" , arr},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , arr},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else {
         return json({
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       }
 
     } catch (const Darabonba::Exception& ex) {
       _context = Darabonba::Policy::RetryPolicyContext(json({
-        {"retriesAttempted" , _retriesAttempted},
-        {"lastRequest" , _lastRequest},
-        {"lastResponse" , _lastResponse},
-        {"exception" , ex},
-      }));
+                                                                {"retriesAttempted" , _retriesAttempted},
+                                                                {"lastRequest" , _lastRequest},
+                                                                {"lastResponse" , _lastResponse},
+                                                                {"exception" , ex},
+                                                            }));
       continue;
     }
   }
@@ -580,29 +580,29 @@ Darabonba::Json Client::doROARequest(const string &action, const string &version
 
 Darabonba::Json Client::doROARequestWithForm(const string &action, const string &version, const string &protocol, const string &method, const string &authType, const string &pathname, const string &bodyType, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   Darabonba::RuntimeOptions runtime_(json({
-    {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
-    {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
-    {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
-    {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
-    {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
-    {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
-    {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
-    {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
-    {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
-    {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
-    {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
-    {"retryOptions", _retryOptions},
-    {"ignoreSSL", runtime.ignoreSSL()},
-    {"tlsMinVersion", _tlsMinVersion}
-    }));
+                                              {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
+                                              {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
+                                              {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
+                                              {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
+                                              {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
+                                              {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
+                                              {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
+                                              {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
+                                              {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
+                                              {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
+                                              {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
+                                              {"retryOptions", _retryOptions},
+                                              {"ignoreSSL", runtime.ignoreSSL()},
+                                              {"tlsMinVersion", _tlsMinVersion}
+                                          }));
 
   shared_ptr<Darabonba::Http::Request> _lastRequest = nullptr;
   shared_ptr<Darabonba::Http::MCurlResponse> _lastResponse = nullptr;
   Darabonba::Exception _lastException;
   int _retriesAttempted = 0;
   Darabonba::Policy::RetryPolicyContext _context = json({
-    {"retriesAttempted" , _retriesAttempted}
-  });
+                                                            {"retriesAttempted" , _retriesAttempted}
+                                                        });
   while (Darabonba::allowRetry(runtime_.retryOptions(), _context)) {
     if (_retriesAttempted > 0) {
       int _backoffTime = Darabonba::getBackoffTime(runtime_.retryOptions(), _context);
@@ -645,19 +645,19 @@ Darabonba::Json Client::doROARequestWithForm(const string &action, const string 
       }
 
       request_.setHeaders(Darabonba::Core::merge(json({
-          {"date" , Utils::Utils::getDateUTCString()},
-          {"host" , _endpoint},
-          {"accept" , "application/json"},
-          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
-          {"x-acs-signature-method" , "HMAC-SHA1"},
-          {"x-acs-signature-version" , "1.0"},
-          {"x-acs-version" , version},
-          {"x-acs-action" , action},
-          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
-        }),
-        globalHeaders,
-        extendsHeaders,
-        request.headers()
+                                                          {"date" , Utils::Utils::getDateUTCString()},
+                                                          {"host" , _endpoint},
+                                                          {"accept" , "application/json"},
+                                                          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
+                                                          {"x-acs-signature-method" , "HMAC-SHA1"},
+                                                          {"x-acs-signature-version" , "1.0"},
+                                                          {"x-acs-version" , version},
+                                                          {"x-acs-action" , action},
+                                                          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)}
+                                                      }),
+                                                 globalHeaders,
+                                                 extendsHeaders,
+                                                 request.headers()
       ));
       if (!!request.hasBody()) {
         json m = json(request.body());
@@ -666,20 +666,20 @@ Darabonba::Json Client::doROARequestWithForm(const string &action, const string 
       }
 
       request_.setQuery(Darabonba::Core::merge(globalQueries,
-        extendsQueries
+                                               extendsQueries
       ));
       if (!!request.hasQuery()) {
         request_.setQuery(Darabonba::Core::merge(request_.query(),
-          request.query()
+                                                 request.query()
         ));
       }
 
       if (authType != "Anonymous") {
         if (Darabonba::isNull(_credential)) {
           throw ClientException(json({
-            {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
-            {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
-          }));
+                                         {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
+                                         {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
+                                     }));
         }
 
         CredentialModel credentialModel = _credential->getCredential();
@@ -714,98 +714,98 @@ Darabonba::Json Client::doROARequestWithForm(const string &action, const string 
 
       if (response_->statusCode() == 204) {
         return json({
-          {"headers" , response_->headers()}
-        });
+                        {"headers" , response_->headers()}
+                    });
       }
 
       if ((response_->statusCode() >= 400) && (response_->statusCode() < 600)) {
         Darabonba::Json _res = Darabonba::Stream::readAsJSON(response_->body());
         json err = json(_res);
-        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("RequestId", ""), err.value("requestId", "")));
-        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("Code", ""), err.value("code", "")));
+        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["RequestId"], err["requestId"]));
+        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["Code"], err["code"]));
         if ((DARA_STRING_TEMPLATE("" , code) == "Throttling") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.User") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.Api")) {
           throw ThrottlingException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                             {"statusCode" , response_->statusCode()},
+                                             {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                             {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                             {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                             {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
+                                             {"data" , err},
+                                             {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                         }));
         } else if ((response_->statusCode() >= 400) && (response_->statusCode() < 500)) {
           throw ClientException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"accessDeniedDetail" , getAccessDeniedDetail(err)},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"accessDeniedDetail" , getAccessDeniedDetail(err)},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         } else {
           throw ServerException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         }
 
       }
 
       if (bodyType == "binary") {
         json resp = json({
-          {"body" , response_->body()},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                             {"body" , response_->body()},
+                             {"headers" , response_->headers()},
+                             {"statusCode" , response_->statusCode()}
+                         });
         return resp;
       } else if (bodyType == "byte") {
         Darabonba::Bytes byt = Darabonba::Stream::readAsBytes(response_->body());
         return json({
-          {"body" , byt},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , byt},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "string") {
         string _str = Darabonba::Stream::readAsString(response_->body());
         return json({
-          {"body" , _str},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , _str},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "json") {
         Darabonba::Json obj = Darabonba::Stream::readAsJSON(response_->body());
         json res = json(obj);
         return json({
-          {"body" , res},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , res},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (bodyType == "array") {
         Darabonba::Json arr = Darabonba::Stream::readAsJSON(response_->body());
         return json({
-          {"body" , arr},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , arr},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else {
         return json({
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       }
 
     } catch (const Darabonba::Exception& ex) {
       _context = Darabonba::Policy::RetryPolicyContext(json({
-        {"retriesAttempted" , _retriesAttempted},
-        {"lastRequest" , _lastRequest},
-        {"lastResponse" , _lastResponse},
-        {"exception" , ex},
-      }));
+                                                                {"retriesAttempted" , _retriesAttempted},
+                                                                {"lastRequest" , _lastRequest},
+                                                                {"lastResponse" , _lastResponse},
+                                                                {"exception" , ex},
+                                                            }));
       continue;
     }
   }
@@ -815,29 +815,29 @@ Darabonba::Json Client::doROARequestWithForm(const string &action, const string 
 
 Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   Darabonba::RuntimeOptions runtime_(json({
-    {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
-    {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
-    {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
-    {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
-    {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
-    {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
-    {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
-    {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
-    {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
-    {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
-    {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
-    {"retryOptions", _retryOptions},
-    {"ignoreSSL", runtime.ignoreSSL()},
-    {"tlsMinVersion", _tlsMinVersion}
-    }));
+                                              {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
+                                              {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
+                                              {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
+                                              {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
+                                              {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
+                                              {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
+                                              {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
+                                              {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
+                                              {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
+                                              {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
+                                              {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
+                                              {"retryOptions", _retryOptions},
+                                              {"ignoreSSL", runtime.ignoreSSL()},
+                                              {"tlsMinVersion", _tlsMinVersion}
+                                          }));
 
   shared_ptr<Darabonba::Http::Request> _lastRequest = nullptr;
   shared_ptr<Darabonba::Http::MCurlResponse> _lastResponse = nullptr;
   Darabonba::Exception _lastException;
   int _retriesAttempted = 0;
   Darabonba::Policy::RetryPolicyContext _context = json({
-    {"retriesAttempted" , _retriesAttempted}
-  });
+                                                            {"retriesAttempted" , _retriesAttempted}
+                                                        });
   while (Darabonba::allowRetry(runtime_.retryOptions(), _context)) {
     if (_retriesAttempted > 0) {
       int _backoffTime = Darabonba::getBackoffTime(runtime_.retryOptions(), _context);
@@ -880,28 +880,28 @@ Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &re
       }
 
       request_.setQuery(Darabonba::Core::merge(globalQueries,
-        extendsQueries,
-        request.query()
+                                               extendsQueries,
+                                               request.query()
       ));
       // endpoint is setted in product client
       request_.setHeaders(Darabonba::Core::merge(json({
-          {"host" , _endpoint},
-          {"x-acs-version" , params.version()},
-          {"x-acs-action" , params.action()},
-          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)},
-          {"x-acs-date" , Utils::Utils::getTimestamp()},
-          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
-          {"accept" , "application/json"}
-        }),
-        globalHeaders,
-        extendsHeaders,
-        request.headers()
+                                                          {"host" , _endpoint},
+                                                          {"x-acs-version" , params.version()},
+                                                          {"x-acs-action" , params.action()},
+                                                          {"user-agent" , Utils::Utils::getUserAgent(_userAgent)},
+                                                          {"x-acs-date" , Utils::Utils::getTimestamp()},
+                                                          {"x-acs-signature-nonce" , Utils::Utils::getNonce()},
+                                                          {"accept" , "application/json"}
+                                                      }),
+                                                 globalHeaders,
+                                                 extendsHeaders,
+                                                 request.headers()
       ));
       if (params.style() == "RPC") {
         map<string, string> headers = getRpcHeaders();
         if (!Darabonba::isNull(headers)) {
           request_.setHeaders(Darabonba::Core::merge(request_.headers(),
-            headers
+                                                     headers
           ));
         }
 
@@ -921,7 +921,7 @@ Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &re
             hashedRequestPayload = Utils::Utils::hash(byteObj, signatureAlgorithm);
             request_.setBody(Darabonba::Stream::toReadable(byteObj));
           } else if (params.reqBodyType() == "json") {
-            string jsonObj = request.body().dump();
+            string jsonObj = json(request.body()).dump();
             hashedRequestPayload = Utils::Utils::hash(Darabonba::BytesUtil::toBytes(jsonObj), signatureAlgorithm);
             request_.setBody(Darabonba::Stream::toReadable(jsonObj));
             request_.addHeader("content-type", "application/json; charset=utf-8");
@@ -941,9 +941,9 @@ Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &re
       if (params.authType() != "Anonymous") {
         if (Darabonba::isNull(_credential)) {
           throw ClientException(json({
-            {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
-            {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
-          }));
+                                         {"code" , DARA_STRING_TEMPLATE("InvalidCredentials")},
+                                         {"message" , DARA_STRING_TEMPLATE("Please set up the credentials correctly. If you are setting them through environment variables, please ensure that ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set correctly. See https://help.aliyun.com/zh/sdk/developer-reference/configure-the-alibaba-cloud-accesskey-environment-variable-on-linux-macos-and-windows-systems for more details.")}
+                                     }));
         }
 
         CredentialModel credentialModel = _credential->getCredential();
@@ -985,99 +985,99 @@ Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &re
         if (!Darabonba::isNull(response_->headers().at("content-type")) && response_->headers().at("content-type") == "text/xml;charset=utf-8") {
           string _str = Darabonba::Stream::readAsString(response_->body());
           json respMap = Darabonba::XML::parseXml(_str, nullptr);
-          err = json(respMap.value("Error", ""));
+          err = json(respMap["Error"]);
         } else {
           Darabonba::Json _res = Darabonba::Stream::readAsJSON(response_->body());
           err = json(_res);
         }
 
-        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("RequestId", ""), err.value("requestId", "")));
-        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err.value("Code", ""), err.value("code", "")));
+        string requestId = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["RequestId"], err["requestId"]));
+        string code = Darabonba::Convert::stringVal(Darabonba::defaultVal(err["Code"], err["code"]));
         if ((DARA_STRING_TEMPLATE("" , code) == "Throttling") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.User") || (DARA_STRING_TEMPLATE("" , code) == "Throttling.Api")) {
           throw ThrottlingException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                             {"statusCode" , response_->statusCode()},
+                                             {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                             {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                             {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                             {"retryAfter" , Utils::Utils::getThrottlingTimeLeft(response_->headers())},
+                                             {"data" , err},
+                                             {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                         }));
         } else if ((response_->statusCode() >= 400) && (response_->statusCode() < 500)) {
           throw ClientException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"accessDeniedDetail" , getAccessDeniedDetail(err)},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"accessDeniedDetail" , getAccessDeniedDetail(err)},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         } else {
           throw ServerException(json({
-            {"statusCode" , response_->statusCode()},
-            {"code" , DARA_STRING_TEMPLATE("" , code)},
-            {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err.value("Message", ""), err.value("message", "")) , " request id: " , requestId)},
-            {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err.value("Description", ""), err.value("description", "")))},
-            {"data" , err},
-            {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
-          }));
+                                         {"statusCode" , response_->statusCode()},
+                                         {"code" , DARA_STRING_TEMPLATE("" , code)},
+                                         {"message" , DARA_STRING_TEMPLATE("code: " , response_->statusCode() , ", " , Darabonba::defaultVal(err["Message"], err["message"]) , " request id: " , requestId)},
+                                         {"description" , DARA_STRING_TEMPLATE("" , Darabonba::defaultVal(err["Description"], err["description"]))},
+                                         {"data" , err},
+                                         {"requestId" , DARA_STRING_TEMPLATE("" , requestId)}
+                                     }));
         }
 
       }
 
       if (params.bodyType() == "binary") {
         json resp = json({
-          {"body" , response_->body()},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                             {"body" , response_->body()},
+                             {"headers" , response_->headers()},
+                             {"statusCode" , response_->statusCode()}
+                         });
         return resp;
       } else if (params.bodyType() == "byte") {
         Darabonba::Bytes byt = Darabonba::Stream::readAsBytes(response_->body());
         return json({
-          {"body" , byt},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , byt},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (params.bodyType() == "string") {
         string respStr = Darabonba::Stream::readAsString(response_->body());
         return json({
-          {"body" , respStr},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , respStr},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (params.bodyType() == "json") {
         Darabonba::Json obj = Darabonba::Stream::readAsJSON(response_->body());
         json res = json(obj);
         return json({
-          {"body" , res},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , res},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else if (params.bodyType() == "array") {
         Darabonba::Json arr = Darabonba::Stream::readAsJSON(response_->body());
         return json({
-          {"body" , arr},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , arr},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       } else {
         string anything = Darabonba::Stream::readAsString(response_->body());
         return json({
-          {"body" , anything},
-          {"headers" , response_->headers()},
-          {"statusCode" , response_->statusCode()}
-        });
+                        {"body" , anything},
+                        {"headers" , response_->headers()},
+                        {"statusCode" , response_->statusCode()}
+                    });
       }
 
     } catch (const Darabonba::Exception& ex) {
       _context = Darabonba::Policy::RetryPolicyContext(json({
-        {"retriesAttempted" , _retriesAttempted},
-        {"lastRequest" , _lastRequest},
-        {"lastResponse" , _lastResponse},
-        {"exception" , ex},
-      }));
+                                                                {"retriesAttempted" , _retriesAttempted},
+                                                                {"lastRequest" , _lastRequest},
+                                                                {"lastResponse" , _lastResponse},
+                                                                {"exception" , ex},
+                                                            }));
       continue;
     }
   }
@@ -1087,30 +1087,30 @@ Darabonba::Json Client::doRequest(const Params &params, const OpenApiRequest &re
 
 Darabonba::Json Client::execute(const Params &params, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   Darabonba::RuntimeOptions runtime_(json({
-    {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
-    {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
-    {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
-    {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
-    {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
-    {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
-    {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
-    {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
-    {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
-    {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
-    {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
-    {"retryOptions", _retryOptions},
-    {"ignoreSSL", runtime.ignoreSSL()},
-    {"tlsMinVersion", _tlsMinVersion},
-    {"disableHttp2", Darabonba::Convert::boolVal(Darabonba::defaultVal(_disableHttp2, false))}
-    }));
+                                              {"key", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.key(), _key))},
+                                              {"cert", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.cert(), _cert))},
+                                              {"ca", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.ca(), _ca))},
+                                              {"readTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.readTimeout(), _readTimeout))},
+                                              {"connectTimeout", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.connectTimeout(), _connectTimeout))},
+                                              {"httpProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpProxy(), _httpProxy))},
+                                              {"httpsProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.httpsProxy(), _httpsProxy))},
+                                              {"noProxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.noProxy(), _noProxy))},
+                                              {"socks5Proxy", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5Proxy(), _socks5Proxy))},
+                                              {"socks5NetWork", Darabonba::Convert::stringVal(Darabonba::defaultVal(runtime.socks5NetWork(), _socks5NetWork))},
+                                              {"maxIdleConns", Darabonba::Convert::int64Val(Darabonba::defaultVal(runtime.maxIdleConns(), _maxIdleConns))},
+                                              {"retryOptions", _retryOptions},
+                                              {"ignoreSSL", runtime.ignoreSSL()},
+                                              {"tlsMinVersion", _tlsMinVersion},
+                                              {"disableHttp2", Darabonba::Convert::boolVal(Darabonba::defaultVal(_disableHttp2, false))}
+                                          }));
 
   shared_ptr<Darabonba::Http::Request> _lastRequest = nullptr;
   shared_ptr<Darabonba::Http::MCurlResponse> _lastResponse = nullptr;
   Darabonba::Exception _lastException;
   int _retriesAttempted = 0;
   Darabonba::Policy::RetryPolicyContext _context = json({
-    {"retriesAttempted" , _retriesAttempted}
-  });
+                                                            {"retriesAttempted" , _retriesAttempted}
+                                                        });
   while (Darabonba::allowRetry(runtime_.retryOptions(), _context)) {
     if (_retriesAttempted > 0) {
       int _backoffTime = Darabonba::getBackoffTime(runtime_.retryOptions(), _context);
@@ -1152,46 +1152,46 @@ Darabonba::Json Client::execute(const Params &params, const OpenApiRequest &requ
       }
 
       InterceptorContextRequest requestContext = InterceptorContextRequest(json({
-        {"headers" , Darabonba::Core::merge(globalHeaders,
-          extendsHeaders,
-          request.headers(),
-          headers
-        )},
-        {"query" , Darabonba::Core::merge(globalQueries,
-          extendsQueries,
-          request.query()
-        )},
-        {"body" , request.body()},
-        {"stream" , request.stream()},
-        {"hostMap" , request.hostMap()},
-        {"pathname" , params.pathname()},
-        {"productId" , _productId},
-        {"action" , params.action()},
-        {"version" , params.version()},
-        {"protocol" , Darabonba::Convert::stringVal(Darabonba::defaultVal(_protocol, params.protocol()))},
-        {"method" , Darabonba::Convert::stringVal(Darabonba::defaultVal(_method, params.method()))},
-        {"authType" , params.authType()},
-        {"bodyType" , params.bodyType()},
-        {"reqBodyType" , params.reqBodyType()},
-        {"style" , params.style()},
-        {"credential" , _credential},
-        {"signatureVersion" , _signatureVersion},
-        {"signatureAlgorithm" , _signatureAlgorithm},
-        {"userAgent" , Utils::Utils::getUserAgent(_userAgent)}
-      }));
+                                                                                    {"headers" , Darabonba::Core::merge(globalHeaders,
+                                                                                                                        extendsHeaders,
+                                                                                                                        request.headers(),
+                                                                                                                        headers
+                                                                                    )},
+                                                                                    {"query" , Darabonba::Core::merge(globalQueries,
+                                                                                                                      extendsQueries,
+                                                                                                                      request.query()
+                                                                                    )},
+                                                                                    {"body" , request.body()},
+                                                                                    {"stream" , request.stream()},
+                                                                                    {"hostMap" , request.hostMap()},
+                                                                                    {"pathname" , params.pathname()},
+                                                                                    {"productId" , _productId},
+                                                                                    {"action" , params.action()},
+                                                                                    {"version" , params.version()},
+                                                                                    {"protocol" , Darabonba::Convert::stringVal(Darabonba::defaultVal(_protocol, params.protocol()))},
+                                                                                    {"method" , Darabonba::Convert::stringVal(Darabonba::defaultVal(_method, params.method()))},
+                                                                                    {"authType" , params.authType()},
+                                                                                    {"bodyType" , params.bodyType()},
+                                                                                    {"reqBodyType" , params.reqBodyType()},
+                                                                                    {"style" , params.style()},
+                                                                                    {"credential" , _credential},
+                                                                                    {"signatureVersion" , _signatureVersion},
+                                                                                    {"signatureAlgorithm" , _signatureAlgorithm},
+                                                                                    {"userAgent" , Utils::Utils::getUserAgent(_userAgent)}
+                                                                                }));
       InterceptorContextConfiguration configurationContext = InterceptorContextConfiguration(json({
-        {"regionId" , _regionId},
-        {"endpoint" , Darabonba::Convert::stringVal(Darabonba::defaultVal(request.endpointOverride(), _endpoint))},
-        {"endpointRule" , _endpointRule},
-        {"endpointMap" , _endpointMap},
-        {"endpointType" , _endpointType},
-        {"network" , _network},
-        {"suffix" , _suffix}
-      }));
+                                                                                                      {"regionId" , _regionId},
+                                                                                                      {"endpoint" , Darabonba::Convert::stringVal(Darabonba::defaultVal(request.endpointOverride(), _endpoint))},
+                                                                                                      {"endpointRule" , _endpointRule},
+                                                                                                      {"endpointMap" , _endpointMap},
+                                                                                                      {"endpointType" , _endpointType},
+                                                                                                      {"network" , _network},
+                                                                                                      {"suffix" , _suffix}
+                                                                                                  }));
       InterceptorContext interceptorContext = InterceptorContext(json({
-        {"request" , requestContext},
-        {"configuration" , configurationContext}
-      }));
+                                                                          {"request" , requestContext},
+                                                                          {"configuration" , configurationContext}
+                                                                      }));
       AttributeMap attributeMap = AttributeMap();
       // 1. spi.modifyConfiguration(context: SPI.InterceptorContext, attributeMap: SPI.AttributeMap);
       _spi->modifyConfiguration(interceptorContext, attributeMap);
@@ -1209,25 +1209,25 @@ Darabonba::Json Client::execute(const Params &params, const OpenApiRequest &requ
       _lastResponse  = response_;
 
       InterceptorContextResponse responseContext = InterceptorContextResponse(json({
-        {"statusCode" , response_->statusCode()},
-        {"headers" , response_->headers()},
-        {"body" , response_->body()}
-      }));
+                                                                                       {"statusCode" , response_->statusCode()},
+                                                                                       {"headers" , response_->headers()},
+                                                                                       {"body" , response_->body()}
+                                                                                   }));
       interceptorContext.setResponse(responseContext);
       // 3. spi.modifyResponse(context: SPI.InterceptorContext, attributeMap: SPI.AttributeMap);
       _spi->modifyResponse(interceptorContext, attributeMap);
       return json({
-        {"headers" , interceptorContext.response().headers()},
-        {"statusCode" , interceptorContext.response().statusCode()},
-        {"body" , interceptorContext.response().deserializedBody()}
-      });
+                      {"headers" , interceptorContext.response().headers()},
+                      {"statusCode" , interceptorContext.response().statusCode()},
+                      {"body" , interceptorContext.response().deserializedBody()}
+                  });
     } catch (const Darabonba::Exception& ex) {
       _context = Darabonba::Policy::RetryPolicyContext(json({
-        {"retriesAttempted" , _retriesAttempted},
-        {"lastRequest" , _lastRequest},
-        {"lastResponse" , _lastResponse},
-        {"exception" , ex},
-      }));
+                                                                {"retriesAttempted" , _retriesAttempted},
+                                                                {"lastRequest" , _lastRequest},
+                                                                {"lastResponse" , _lastResponse},
+                                                                {"exception" , ex},
+                                                            }));
       continue;
     }
   }
@@ -1239,9 +1239,9 @@ Darabonba::Json Client::execute(const Params &params, const OpenApiRequest &requ
 Darabonba::Json Client::callApi(const Params &params, const OpenApiRequest &request, const Darabonba::RuntimeOptions &runtime) {
   if (params.empty()) {
     throw ClientException(json({
-      {"code" , "ParameterMissing"},
-      {"message" , "'params' can not be unset"}
-    }));
+                                   {"code" , "ParameterMissing"},
+                                   {"message" , "'params' can not be unset"}
+                               }));
   }
 
   if (Darabonba::isNull(_signatureVersion) || _signatureVersion != "v4") {
@@ -1262,9 +1262,9 @@ Darabonba::Json Client::callApi(const Params &params, const OpenApiRequest &requ
 }
 
 /**
- * Get accesskey id by using credential
- * @return accesskey id
- */
+* Get accesskey id by using credential
+* @return accesskey id
+*/
 string Client::getAccessKeyId() {
   if (Darabonba::isNull(_credential)) {
     return "";
@@ -1275,9 +1275,9 @@ string Client::getAccessKeyId() {
 }
 
 /**
- * Get accesskey secret by using credential
- * @return accesskey secret
- */
+* Get accesskey secret by using credential
+* @return accesskey secret
+*/
 string Client::getAccessKeySecret() {
   if (Darabonba::isNull(_credential)) {
     return "";
@@ -1288,9 +1288,9 @@ string Client::getAccessKeySecret() {
 }
 
 /**
- * Get security token by using credential
- * @return security token
- */
+* Get security token by using credential
+* @return security token
+*/
 string Client::getSecurityToken() {
   if (Darabonba::isNull(_credential)) {
     return "";
@@ -1301,9 +1301,9 @@ string Client::getSecurityToken() {
 }
 
 /**
- * Get bearer token by credential
- * @return bearer token
- */
+* Get bearer token by credential
+* @return bearer token
+*/
 string Client::getBearerToken() {
   if (Darabonba::isNull(_credential)) {
     return "";
@@ -1314,9 +1314,9 @@ string Client::getBearerToken() {
 }
 
 /**
- * Get credential type by credential
- * @return credential type e.g. access_key
- */
+* Get credential type by credential
+* @return credential type e.g. access_key
+*/
 string Client::getType() {
   if (Darabonba::isNull(_credential)) {
     return "";
@@ -1327,38 +1327,38 @@ string Client::getType() {
 }
 
 /**
- * If the endpointRule and config.endpoint are empty, throw error
- * @param config config contains the necessary information to create a client
- */
+* If the endpointRule and config.endpoint are empty, throw error
+* @param config config contains the necessary information to create a client
+*/
 void Client::checkConfig(const AlibabaCloud::OpenApi::Utils::Models::Config &config) {
   if (Darabonba::isNull(_endpointRule) && !config.hasEndpoint()) {
     throw ClientException(json({
-      {"code" , "ParameterMissing"},
-      {"message" , "'config.endpoint' can not be empty"}
-    }));
+                                   {"code" , "ParameterMissing"},
+                                   {"message" , "'config.endpoint' can not be empty"}
+                               }));
   }
 
 }
 
 /**
- * set gateway client
- * @param spi.
- */
+* set gateway client
+* @param spi.
+*/
 void Client::setGatewayClient(const shared_ptr<SPI> &spi) {
   this->_spi = spi;
 }
 
 /**
- * set RPC header for debug
- * @param headers headers for debug, this header can be used only once.
- */
+* set RPC header for debug
+* @param headers headers for debug, this header can be used only once.
+*/
 void Client::setRpcHeaders(const map<string, string> &headers) {
   this->_headers = headers;
 }
 
 /**
- * get RPC header for debug
- */
+* get RPC header for debug
+*/
 map<string, string> Client::getRpcHeaders() {
   map<string, string> headers = _headers;
   this->_headers = map<string, string>();
@@ -1367,11 +1367,11 @@ map<string, string> Client::getRpcHeaders() {
 
 json Client::getAccessDeniedDetail(const json &err) {
   json accessDeniedDetail = nullptr;
-  if (!Darabonba::isNull(err.value("AccessDeniedDetail", ""))) {
-    json detail1 = json(err.value("AccessDeniedDetail", ""));
+  if (!!err.contains("AccessDeniedDetail")) {
+    json detail1 = json(err["AccessDeniedDetail"]);
     accessDeniedDetail = detail1;
-  } else if (!Darabonba::isNull(err.value("accessDeniedDetail", ""))) {
-    json detail2 = json(err.value("accessDeniedDetail", ""));
+  } else if (!!err.contains("accessDeniedDetail")) {
+    json detail2 = json(err["accessDeniedDetail"]);
     accessDeniedDetail = detail2;
   }
 
