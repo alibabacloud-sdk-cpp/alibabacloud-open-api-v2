@@ -98,14 +98,14 @@ namespace AlibabaCloud
           };
           virtual void fromMap(const Darabonba::Json &obj) override { from_json(obj, *this); validate(); };
           virtual Darabonba::Json toMap() const override { Darabonba::Json obj; to_json(obj, *this); return obj; };
-          virtual bool empty() const override { this->accessKeyId_ != nullptr
-                                                && this->accessKeySecret_ != nullptr && this->securityToken_ != nullptr && this->bearerToken_ != nullptr && this->protocol_ != nullptr && this->method_ != nullptr
-                                                && this->regionId_ != nullptr && this->readTimeout_ != nullptr && this->connectTimeout_ != nullptr && this->httpProxy_ != nullptr && this->httpsProxy_ != nullptr
-                                                && this->credential_ != nullptr && this->endpoint_ != nullptr && this->noProxy_ != nullptr && this->maxIdleConns_ != nullptr && this->network_ != nullptr
-                                                && this->userAgent_ != nullptr && this->suffix_ != nullptr && this->socks5Proxy_ != nullptr && this->socks5NetWork_ != nullptr && this->endpointType_ != nullptr
-                                                && this->openPlatformEndpoint_ != nullptr && this->type_ != nullptr && this->signatureVersion_ != nullptr && this->signatureAlgorithm_ != nullptr && this->globalParameters_ != nullptr
-                                                && this->key_ != nullptr && this->cert_ != nullptr && this->ca_ != nullptr && this->disableHttp2_ != nullptr && this->retryOptions_ != nullptr
-                                                && this->tlsMinVersion_ != nullptr; };
+          virtual bool empty() const override { return this->accessKeyId_ == nullptr
+                                                && this->accessKeySecret_ == nullptr && this->securityToken_ == nullptr && this->bearerToken_ == nullptr && this->protocol_ == nullptr && this->method_ == nullptr
+                                                && this->regionId_ == nullptr && this->readTimeout_ == nullptr && this->connectTimeout_ == nullptr && this->httpProxy_ == nullptr && this->httpsProxy_ == nullptr
+                                                && this->credential_ == nullptr && this->endpoint_ == nullptr && this->noProxy_ == nullptr && this->maxIdleConns_ == nullptr && this->network_ == nullptr
+                                                && this->userAgent_ == nullptr && this->suffix_ == nullptr && this->socks5Proxy_ == nullptr && this->socks5NetWork_ == nullptr && this->endpointType_ == nullptr
+                                                && this->openPlatformEndpoint_ == nullptr && this->type_ == nullptr && this->signatureVersion_ == nullptr && this->signatureAlgorithm_ == nullptr && this->globalParameters_ == nullptr
+                                                && this->key_ == nullptr && this->cert_ == nullptr && this->ca_ == nullptr && this->disableHttp2_ == nullptr && this->retryOptions_ == nullptr
+                                                && this->tlsMinVersion_ == nullptr;};
           // accessKeyId Field Functions
           bool hasAccessKeyId() const { return this->accessKeyId_ != nullptr;};
           void deleteAccessKeyId() { this->accessKeyId_ = nullptr;};

@@ -42,7 +42,7 @@ namespace Models
     };
     virtual void fromMap(const Darabonba::Json &obj) override { from_json(obj, *this); validate(); };
     virtual Darabonba::Json toMap() const override { Darabonba::Json obj; to_json(obj, *this); return obj; };
-    virtual bool empty() const override { this->headers_ != nullptr
+    virtual bool empty() const override { return this->headers_ == nullptr
         && this->query_ != nullptr && this->body_ != nullptr && this->stream_ != nullptr && this->hostMap_ != nullptr && this->endpointOverride_ != nullptr; };
     // headers Field Functions 
     bool hasHeaders() const { return this->headers_ != nullptr;};
